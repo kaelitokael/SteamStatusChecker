@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Bundy Android</string>
+    <string name="app_name">Steam Status Checker</string>
 
-    <string name="activity_title_example">Example Activity</string>
-    <string name="activity_title_login">Login Activity</string>
+
+    <string name="base_url">https://crowbar.steamstat.us/</string>
 
     <string name="dialog_action_ok">OK</string>
     <string name="dialog_action_cancel">CANCEL</string>

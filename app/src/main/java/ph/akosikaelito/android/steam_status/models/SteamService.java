@@ -9,14 +9,8 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by johneris on 6/5/2015.
  */
-@Table(name = "Contributors")
-public class Contributor extends Model {
-
-    /*
-     * @Expose - expose the field to Gson
-     * @SerializedName("") - name used by Gson
-     * @Column(name = "") - column name used by ActiveAndroid
-     */
+@Table(name = "SteamService")
+public class SteamService extends Model {
 
     @Expose
     @SerializedName("login")
@@ -33,7 +27,7 @@ public class Contributor extends Model {
     @Column(name = "avatar_url")
     public String avatarUrl;
 
-    public Contributor() {
+    public SteamService() {
         super();    // required by ActiveAndroid
     }
 

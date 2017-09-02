@@ -30,16 +30,4 @@ public class Preferences {
         return prefs.getString(API_KEY, "");
     }
 
-    public static void setBaseUrlMode(Context context, RestClient.BaseUrlMode baseUrlMode) {
-        SharedPreferences prefs = context.getSharedPreferences(PACKAGE, Context.MODE_PRIVATE);
-        prefs.edit().putString(BASE_URL_MODE, baseUrlMode.toString()).commit();
-    }
-
-    public static RestClient.BaseUrlMode getBaseUrlMode(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(PACKAGE, Context.MODE_PRIVATE);
-        String baseUrlMode = prefs.getString(BASE_URL_MODE, "");
-        return baseUrlMode.equals(RestClient.BaseUrlMode.LIVE) ?
-                RestClient.BaseUrlMode.LIVE : RestClient.BaseUrlMode.DEV;
-    }
-
 }

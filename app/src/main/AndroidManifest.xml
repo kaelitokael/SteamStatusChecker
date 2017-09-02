@@ -34,13 +34,16 @@
             android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="ph.coreproc.android.kitchenmaterial.models.Contributor" />
+            android:value="ph.akosikaelito.android.steam_status.models.SteamService" />
         <!-- ActiveAndroid -->
+
+        <meta-data
+            android:name="base-url"
+            android:value="@string/base_url"/>
 
         <activity
             android:name="ph.akosikaelito.android.steam_status.activities.MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

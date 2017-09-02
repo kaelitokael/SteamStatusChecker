@@ -15,17 +15,17 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 import ph.akosikaelito.android.steam_status.R;
-import ph.akosikaelito.android.steam_status.models.Contributor;
+import ph.akosikaelito.android.steam_status.models.SteamService;
 
 /**
  * Created by johneris on 6/8/2015.
  */
 public class RVContributorAdapter extends RecyclerView.Adapter<RVContributorAdapter.ContributorViewHolder> {
 
-    List<Contributor> mContributors;
+    List<SteamService> mContributors;
     private Context mContext;
 
-    public RVContributorAdapter(Context context, List<Contributor> contributors) {
+    public RVContributorAdapter(Context context, List<SteamService> contributors) {
         mContext = context;
         mContributors = contributors;
     }
@@ -39,7 +39,7 @@ public class RVContributorAdapter extends RecyclerView.Adapter<RVContributorAdap
 
     @Override
     public void onBindViewHolder(ContributorViewHolder holder, int position) {
-        Contributor contributor = mContributors.get(position);
+        SteamService contributor = mContributors.get(position);
         Picasso.with(mContext).load(contributor.avatarUrl).into(holder.ivAvatar);
         holder.tvUsername.setText(contributor.userName);
         holder.tvContributions.setText("" + contributor.contributions);
@@ -55,7 +55,7 @@ public class RVContributorAdapter extends RecyclerView.Adapter<RVContributorAdap
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public void changeData(List<Contributor> contributors) {
+    public void changeData(List<SteamService> contributors) {
         mContributors = contributors;
         notifyDataSetChanged();
     }

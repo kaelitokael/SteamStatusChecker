@@ -41,25 +41,6 @@
             android:name="ph.akosikaelito.android.steam_status.activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
-        <activity
-            android:name="ph.akosikaelito.android.steam_status.activities.ExampleActivity"
-            android:label="@string/activity_title_example"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name="ph.akosikaelito.android.steam_status.activities.LoginActivity"
-            android:label="@string/activity_title_login"
-            android:screenOrientation="landscape" />
-        <activity android:name="ph.akosikaelito.android.steam_status.activities.DrawerActivity" />
-        <activity
-            android:name="ph.akosikaelito.android.steam_status.activities.DashboardActivity"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.LocatorActivity"></activity>
     </application>
 
 </manifest>

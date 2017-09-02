@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 
 // Version Info
-def versionMajor = 1    // backward compatibility
+def versionMajor = 0    // backward compatibility
 def versionMinor = 0    // new feature or a major behavior change
-def versionPatch = 0    // fixes or minor patch
+def versionPatch = 1    // fixes or minor patch
 
 def buildNumber = 0     // change this for same versionName but different versionCode
 

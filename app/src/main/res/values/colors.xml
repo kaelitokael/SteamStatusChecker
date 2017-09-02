@@ -3,7 +3,7 @@
 
     <color name="primary">#1B1B24</color>           <!-- color of toolbar -->
     <color name="primary_dark">#464646</color>      <!-- color of status bar -->
-    <color name="primary_light">#BBDEFB</color>
+    <color name="primary_light">#313140</color>
     <color name="accent">#282936</color>            <!-- tint of views -->
     <color name="text_primary">#8A8DB7</color>
     <color name="text_secondary">#6f73b6</color>

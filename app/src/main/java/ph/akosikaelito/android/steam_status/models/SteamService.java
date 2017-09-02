@@ -9,26 +9,18 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by johneris on 6/5/2015.
  */
-@Table(name = "SteamService")
-public class SteamService extends Model {
+public class SteamService {
 
-    @Expose
-    @SerializedName("login")
-    @Column(name = "user_name")
-    public String userName;
+    public String status;
 
-    @Expose
-    @SerializedName("contributions")
-    @Column(name = "contributions")
-    public int contributions;
+    public String title;
 
-    @Expose
-    @SerializedName("avatar_url")
-    @Column(name = "avatar_url")
-    public String avatarUrl;
+    public String info;
 
-    public SteamService() {
-        super();    // required by ActiveAndroid
+    public SteamService(String status, String title, String info) {
+        this.status = status;
+        this.title = title;
+        this.info = info;
     }
 
 }

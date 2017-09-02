@@ -1,0 +1,38 @@
+package ph.akosikaelito.android.steam_status.activities;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
+import butterknife.ButterKnife;
+import ph.akosikaelito.android.steam_status.R;
+
+/**
+ * Created by johneris on 6/1/2015.
+ */
+public abstract class BaseActivity extends AppCompatActivity {
+
+    protected Context mContext;
+
+    protected Toolbar mToolbar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(getLayoutResourceId());
+        ButterKnife.bind(this);
+
+        mContext = this;
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+
+    }
+
+    protected abstract int getLayoutResourceId();
+
+}

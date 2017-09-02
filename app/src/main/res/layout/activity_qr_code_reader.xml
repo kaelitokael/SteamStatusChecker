@@ -4,7 +4,7 @@
     android:id="@+id/activity_qr_code_reader"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ph.coreproc.android.kitchenmaterial.activities.QrCodeReaderActivity">
+    tools:context="ph.akosikaelito.android.steam_status.activities.QrCodeReaderActivity">
 
 
     <RelativeLayout

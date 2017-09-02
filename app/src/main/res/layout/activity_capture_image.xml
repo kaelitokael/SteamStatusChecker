@@ -4,7 +4,7 @@
     android:id="@+id/activity_capture_image"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ph.coreproc.android.kitchenmaterial.activities.CaptureImageActivity">
+    tools:context="ph.akosikaelito.android.steam_status.activities.CaptureImageActivity">
 
 
 

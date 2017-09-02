@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ph.coreproc.android.kitchenmaterial.activities.DashboardActivity">
+    tools:context="ph.akosikaelito.android.steam_status.activities.DashboardActivity">
 
     <ImageView
         android:id="@+id/loadingPage"

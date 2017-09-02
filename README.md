@@ -8,3 +8,5 @@ Check status of Steam Services:
 **and others!** <br/>
 
 APK LINK: https://1drv.ms/u/s!AqTzz1jnCC4Qgv8gFqtX7F5cMrGcFQ
+
+Credits to https://steamstat.us

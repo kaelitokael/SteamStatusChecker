@@ -43,15 +43,79 @@ public class SteamStatusResponse implements Serializable {
 
             if (entry.getValue() instanceof JsonObject) {
 
-                JsonObject jsonObject = entry.getValue().getAsJsonObject();
+                if (!entry.getKey().contains("csgo") && !entry.getKey().contains("dota")) {
+                    JsonObject jsonObject = entry.getValue().getAsJsonObject();
 
-                String title = entry.getKey();
-                String info = jsonObject.get("title").getAsString();
-                String status = jsonObject.get("status").getAsString();
-                SteamService steamService = new SteamService(status, title, info);
-                steamServices.add(steamService);
+                    String title = setServiceName(entry.getKey());
+                    String info = jsonObject.get("title").getAsString();
+                    String status = jsonObject.get("status").getAsString();
+                    SteamService steamService = new SteamService(status, title, info);
+                    steamServices.add(steamService);
+                }
             }
         }
         return steamServices;
+    }
+
+    public ArrayList<SteamService> getCsGoServices() {
+        ArrayList<SteamService> steamServices = new ArrayList<>();
+        for (Map.Entry<String, JsonElement> entry : this.services.entrySet()) {
+
+            if (entry.getValue() instanceof JsonObject) {
+
+                if (entry.getKey().contains("csgo")) {
+                    JsonObject jsonObject = entry.getValue().getAsJsonObject();
+
+                    String title = setServiceName(entry.getKey());
+                    String info = jsonObject.get("title").getAsString();
+                    String status = jsonObject.get("status").getAsString();
+                    SteamService steamService = new SteamService(status, title, info);
+                    steamServices.add(steamService);
+                }
+            }
+        }
+        return steamServices;
+    }
+
+    public ArrayList<SteamService> getDota2Services() {
+        ArrayList<SteamService> steamServices = new ArrayList<>();
+        for (Map.Entry<String, JsonElement> entry : this.services.entrySet()) {
+
+            if (entry.getValue() instanceof JsonObject) {
+
+                if (entry.getKey().contains("dota")) {
+                    JsonObject jsonObject = entry.getValue().getAsJsonObject();
+
+                    String title = setServiceName(entry.getKey());
+                    String info = jsonObject.get("title").getAsString();
+                    String status = jsonObject.get("status").getAsString();
+                    SteamService steamService = new SteamService(status, title, info);
+                    steamServices.add(steamService);
+                }
+            }
+        }
+        return steamServices;
+    }
+
+    private String setServiceName(String serviceName) {
+
+        String upperCaseWords = "csgo#us#cms#cms-ws#eu";
+
+        if (serviceName.contains("tf2")) {
+            serviceName = "Team Fortress 2";
+        }
+
+        serviceName = serviceName.replace("_", " ");
+        String[] strArray = serviceName.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String s : strArray) {
+            String cap = "";
+            if(upperCaseWords.contains(s.toLowerCase()))
+                cap = s.toUpperCase();
+            else
+                cap = s.substring(0, 1).toUpperCase() + s.substring(1);
+            builder.append(cap + " ");
+        }
+        return builder.toString();
     }
 }

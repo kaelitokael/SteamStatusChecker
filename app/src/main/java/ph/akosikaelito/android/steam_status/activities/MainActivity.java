@@ -14,6 +14,7 @@ import ph.akosikaelito.android.steam_status.App;
 import ph.akosikaelito.android.steam_status.R;
 import ph.akosikaelito.android.steam_status.adapters.SteamServiceRecyclerViewAdapter;
 import ph.akosikaelito.android.steam_status.models.SteamService;
+import ph.akosikaelito.android.steam_status.models.SteamServiceCategory;
 import ph.akosikaelito.android.steam_status.models.SteamStatusResponse;
 import ph.akosikaelito.android.steam_status.rest.ApiService;
 import ph.akosikaelito.android.steam_status.utils.UiUtil;
@@ -27,7 +28,7 @@ import retrofit2.Response;
 public class MainActivity extends BaseActivity {
 
     @Bind(R.id.servicesRecyclerView)
-    RecyclerView mServicesRecyclerView;
+    public RecyclerView mServicesRecyclerView;
 
     // RETROFIT
     private Call<SteamStatusResponse> mSteamStatusResponseCall;
@@ -63,7 +64,6 @@ public class MainActivity extends BaseActivity {
 
                 mSteamStatusResponse = response.body();
                 initSteamServices();
-
             }
 
             @Override
@@ -75,8 +75,19 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initSteamServices() {
+
+        ArrayList<SteamServiceCategory> steamServiceCategories = new ArrayList<>();
+        SteamServiceCategory steamServiceCategory = new SteamServiceCategory("Dota2", mSteamStatusResponse.getDota2Services());
+        steamServiceCategories.add(steamServiceCategory);
+
+        steamServiceCategory = new SteamServiceCategory("CSGO", mSteamStatusResponse.getCsGoServices());
+        steamServiceCategories.add(steamServiceCategory);
+
+        steamServiceCategory = new SteamServiceCategory("Other Services", mSteamStatusResponse.getSteamServices());
+        steamServiceCategories.add(steamServiceCategory);
+
         SteamServiceRecyclerViewAdapter steamServiceRecyclerViewAdapter =
-                new SteamServiceRecyclerViewAdapter(mContext, mSteamStatusResponse.getSteamServices());
+                new SteamServiceRecyclerViewAdapter(mContext, steamServiceCategories);
         App.setDefaultRecyclerView(mContext, mServicesRecyclerView, steamServiceRecyclerViewAdapter);
     }
 

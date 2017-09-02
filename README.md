@@ -7,4 +7,4 @@ Check status of Steam Services:
 **Web API** <br/>
 **and others!** <br/>
 
-APK LINK: https://1drv.ms/u/s!AqTzz1jnCC4Qgv8fSZ8q4ra6BAevfw
+APK LINK: https://1drv.ms/u/s!AqTzz1jnCC4Qgv8gFqtX7F5cMrGcFQ

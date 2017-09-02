@@ -2,7 +2,11 @@ package ph.akosikaelito.android.steam_status.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.coreproc.android.kitchen.Kitchen;
 import com.coreproc.android.kitchen.utils.KitchenRestClient;
@@ -30,12 +34,15 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.servicesRecyclerView)
     public RecyclerView mServicesRecyclerView;
 
+    @Bind(R.id.swipeRefreshLayout)
+    public SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @Bind(R.id.noDataLinearLayout)
+    public LinearLayout mNoDataLinearLayout;
+
     // RETROFIT
     private Call<SteamStatusResponse> mSteamStatusResponseCall;
     private SteamStatusResponse mSteamStatusResponse;
-
-    private ArrayList<SteamService> mSteamServices;
-
 
     @Override
     protected int getLayoutResourceId() {
@@ -50,15 +57,23 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initialize() {
+        mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
+        mOnRefreshListener.onRefresh();
+    }
+
+    private void getServices() {
         if (mSteamStatusResponseCall != null)
             mSteamStatusResponseCall.cancel();
 
+        mNoDataLinearLayout.setVisibility(View.GONE);
         ApiService apiService = KitchenRestClient.create(mContext, ApiService.class, false);
         mSteamStatusResponseCall = apiService.getSteamStatus();
         mSteamStatusResponseCall.enqueue(new Callback<SteamStatusResponse>() {
             @Override
             public void onResponse(Call<SteamStatusResponse> call, Response<SteamStatusResponse> response) {
+                mSwipeRefreshLayout.setRefreshing(false);
                 if (!response.isSuccessful()) {
+                    mNoDataLinearLayout.setVisibility(View.VISIBLE);
                     return;
                 }
 
@@ -68,10 +83,10 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<SteamStatusResponse> call, Throwable t) {
-
+                mSwipeRefreshLayout.setRefreshing(false);
+                mNoDataLinearLayout.setVisibility(View.VISIBLE);
             }
         });
-
     }
 
     private void initSteamServices() {
@@ -90,6 +105,19 @@ public class MainActivity extends BaseActivity {
                 new SteamServiceRecyclerViewAdapter(mContext, steamServiceCategories);
         App.setDefaultRecyclerView(mContext, mServicesRecyclerView, steamServiceRecyclerViewAdapter);
     }
+
+    SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    getServices();
+                }
+            });
+        }
+    };
 
 
 }

@@ -52,8 +52,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.0.0'
     // Butter Knife - view injection
     compile 'com.jakewharton:butterknife:7.0.1'
-    // Retrofit - REST API to Java interface
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
     // ActiveAndroid - active record style ORM
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     // Gson - convert Java Objects into their JSON representation
@@ -67,7 +65,6 @@ dependencies {
     compile 'com.github.nisrulz:qreader:2.0.1'
     compile 'com.ivankocijan:MagicViews:3.1.1@aar'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.1'
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.2@aar'
     compile 'com.github.CoreProc:kitchen-android:-SNAPSHOT'

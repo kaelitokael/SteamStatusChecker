@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primary">#212121</color>           <!-- color of toolbar -->
-    <color name="primary_dark">#616161</color>      <!-- color of status bar -->
+    <color name="primary">#1B1B24</color>           <!-- color of toolbar -->
+    <color name="primary_dark">#464646</color>      <!-- color of status bar -->
     <color name="primary_light">#BBDEFB</color>
-    <color name="accent">#009688</color>            <!-- tint of views -->
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#727272</color>
+    <color name="accent">#282936</color>            <!-- tint of views -->
+    <color name="text_primary">#8A8DB7</color>
+    <color name="text_secondary">#6f73b6</color>
     <color name="gray_alpha">#99727272</color>
     <color name="divider">#B6B6B6</color>
     <color name="text_icon">#FFFFFF</color>
 
-    <color name="button_primary_background">@color/primary</color>
-    <color name="button_primary_background_pressed">@color/primary_dark</color>
-    <color name="button_primary_background_focused">@color/primary_dark</color>
-    <color name="button_primary_text">#FFFFFF</color>
+    <color name="button_primary_background">@color/text_primary</color>
+    <color name="button_primary_background_pressed">@color/text_secondary</color>
+    <color name="button_primary_background_focused">@color/text_secondary</color>
+    <color name="button_primary_text">#ffffff</color>
 
     <color name="button_danger_background">#E57373</color>
     <color name="button_danger_background_pressed">#F44336</color>

@@ -12,7 +12,7 @@ android {
     buildToolsVersion "24"
 
     defaultConfig {
-        applicationId "ph.coreproc.android.kitchenmaterial"
+        applicationId "ph.akosikaelito.android.steam_status"
 
         minSdkVersion 15        // minimum supported version
         targetSdkVersion 22     // maximum sdk version the app is tested against

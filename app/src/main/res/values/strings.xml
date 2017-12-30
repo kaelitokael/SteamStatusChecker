@@ -2,7 +2,7 @@
     <string name="app_name">Steam Status Checker</string>
 
 
-    <string name="base_url">https://crowbar.steamstat.us/</string>
+    <string name="base_url">https://crowbar.steamstat.us</string>
 
     <string name="dialog_action_ok">OK</string>
     <string name="dialog_action_cancel">CANCEL</string>

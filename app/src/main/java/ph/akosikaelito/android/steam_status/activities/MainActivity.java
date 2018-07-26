@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -83,6 +84,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<SteamStatusResponse> call, Throwable t) {
+                Log.e("onFailure", "onFailure: " + t.getMessage());
                 mSwipeRefreshLayout.setRefreshing(false);
                 mNoDataLinearLayout.setVisibility(View.VISIBLE);
             }

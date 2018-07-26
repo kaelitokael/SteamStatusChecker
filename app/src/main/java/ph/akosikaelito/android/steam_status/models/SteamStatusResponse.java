@@ -25,7 +25,7 @@ public class SteamStatusResponse implements Serializable {
     private Long time;
 
     @SerializedName("online")
-    public int online;
+    public double online;
 
     @SerializedName("online_info")
     public String onlineInfo;

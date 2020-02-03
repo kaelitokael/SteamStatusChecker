@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: Mansmith
+  version: '1.0'
+servers:
+  - url: 'http://127.0.0.1:3100'
+    description: Mock
+paths:
+  /api/user:
+    get:
+      summary: Logged In Uer
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        minimum: 1
+                      name:
+                        type: string
+                      points:
+                        type: integer
+                        minimum: 0
+      operationId: get-api-user
+      security:
+        - JWT: []
+  /api/rewards:
+    get:
+      summary: Get rewards
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Reward'
+      operationId: get-api-rewards
+      security:
+        - JWT: []
+  '/api/conferences/{conference_id}/agendas/{agenda_id}/ratings':
+    post:
+      summary: Rate agenda
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Rating'
+                  meta:
+                    type: object
+                    properties:
+                      points_earned:
+                        type: integer
+                        minimum: 0
+      operationId: post-api-conferences
+      security:
+        - JWT: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+    parameters:
+      - schema:
+          type: integer
+        name: conference_id
+        in: path
+        required: true
+      - schema:
+          type: integer
+        name: agenda_id
+        in: path
+        required: true
+components:
+  schemas:
+    Reward:
+      title: Reward
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        name:
+          type: string
+        points:
+          type: integer
+          minimum: 1
+        image_url:
+          type: string
+    Rating:
+      title: Rating
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 1
+  securitySchemes:
+    JWT:
+      name: Authorization
+      type: apiKey
+      in: header

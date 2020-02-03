@@ -1,0 +1,1027 @@
+openapi: 3.0.0
+info:
+  title: SynerPark
+  version: '1.0'
+  description: ''
+servers:
+  - url: 'http://127.0.0.1:3100/'
+    description: Mock
+  - url: 'http://synerpark.test/'
+    description: Local
+  - url: 'https://synerpark.coreproc.net'
+    description: Internal
+  - url: 'https://synerpark.coreproc.dev'
+    description: Staging
+paths:
+  /api/cities:
+    get:
+      summary: Cities
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/City'
+                  meta:
+                    type: object
+                    properties:
+                      pagination:
+                        $ref: '#/components/schemas/Pagination'
+      operationId: get-cities
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: x-device-udid
+          required: true
+      requestBody: {}
+    parameters: []
+  /oauth/token:
+    post:
+      summary: Login
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+              examples: {}
+      operationId: post-login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+                scope:
+                  type: string
+              required:
+                - grant_type
+                - client_id
+                - client_secret
+                - username
+                - password
+                - scope
+            examples:
+              chris-pop-os:
+                value:
+                  grant_type: password
+                  client_id: '2'
+                  client_secret: 9F3xpqhFL7QAI9tYjvOGhvp5FPzx6gEdVB9DIKzg
+                  username: chrisbjr@gmail.com
+                  password: hello123
+                  scope: '*'
+        description: ''
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: X-Device-UDID
+          required: true
+    parameters: []
+  /api/user:
+    get:
+      summary: Get logged in user details
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      id: 1
+                      name: Raul
+                      address: Exodus St.
+                      city_id: 964
+                      email: chrisbjr@gmail.com
+                      mobile_number: 9171231234
+                      avatar_thumb: 'http://synerpark.test/storage/1/conversions/id_pic-thumb.jpg'
+                      avatar: 'http://synerpark.test/storage/1/conversions/id_pic-standard.jpg'
+                      has_vehicle: false
+                      is_mobile_number_verified: false
+                      is_profile_completed: true
+                      city:
+                        data:
+                          id: 964
+                          name: Caloocan
+                          state_name: Metro Manila
+                          country_name: Philippines
+                          region_name: National Capital Region
+                          latitude: '14.75657840'
+                          longitude: '121.04497680'
+      operationId: get-api-user
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: X-Device-UDID
+          required: true
+      requestBody: {}
+      security:
+        - passport: []
+  /api/register:
+    post:
+      summary: Register
+      tags:
+        - register
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+      operationId: post-api-register
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: X-Device-UDID
+          required: true
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/User'
+  '/api/register/validate-email?email={email}}':
+    get:
+      summary: Validate email
+      tags:
+        - register
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  errors:
+                    type: object
+                    properties:
+                      email:
+                        type: array
+                        items:
+                          type: string
+      operationId: get-api-register-validate-email
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: X-Device-UDID
+          required: true
+      requestBody: {}
+    parameters:
+      - schema:
+          type: string
+        name: email
+        in: path
+        required: true
+  /api/vehicles:
+    get:
+      summary: Get Vehicles
+      tags:
+        - vehicles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Vehicle'
+      operationId: get-api-vehicles
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: true
+      security:
+        - passport: []
+      requestBody: {}
+    post:
+      summary: Create Vehicles
+      tags:
+        - vehicles
+      responses: {}
+      operationId: post-api-vehicles
+  /api/reservations:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Reservation'
+      operationId: get-api-reservations
+      parameters:
+        - schema:
+            type: string
+          in: header
+          required: true
+          name: Authorization
+        - schema:
+            type: string
+            default: Application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: x-device-udid
+          required: true
+    post:
+      summary: ''
+      operationId: post-api-reservations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Reservation'
+        '':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Reservation'
+                  vehicle:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Vehicle'
+                  parking_area_level:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ParkingAreaLevel'
+                  parking_area:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ParkingArea'
+                  parking_slot:
+                    type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ParkingSlot'
+          description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: true
+        - schema:
+            type: string
+            default: Application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: x-device-udid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/Reservation'
+    parameters: []
+  /api/user/cards:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Card'
+      operationId: get-api-user-cards
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: true
+        - schema:
+            type: string
+            default: Application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: X-Device-UDID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-api-user-cards
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Card'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: true
+        - schema:
+            type: string
+            default: Application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: X-Device-UDID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                is_primary:
+                  type: boolean
+                id:
+                  type: string
+    put:
+      summary: ''
+      operationId: put-api-user-cards
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Card'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: true
+        - schema:
+            type: string
+            default: Application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: X-Device-UDID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                is_primary:
+                  type: boolean
+  /api/auth/social/login:
+    post:
+      summary: ''
+      operationId: post-api-auth-social-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token_type:
+                    type: string
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type:
+                      - string
+                      - 'null'
+      parameters:
+        - schema:
+            type: string
+            default: Application/json
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: X-Device-UDID
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider:
+                  type: string
+                token:
+                  type: string
+  '/api/parking-areas/{parking_area}/parking-hours':
+    parameters:
+      - schema:
+          type: string
+        name: parking_area
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ParkingAreaOperatingHours'
+      operationId: get-api-parking-areas-parking_area-parking-hours
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-type
+        - schema:
+            type: string
+            default: '2400'
+          in: header
+          name: x-device-UDID
+  '/api/parking-areas/{parkingArea}/parking-levels':
+    parameters:
+      - schema:
+          type: string
+        name: parkingArea
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ParkingAreaLevel'
+      operationId: get-api-parking-areas-parkingArea-parking-levels
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Accept
+        - schema:
+            type: string
+            default: Bearer sampleAuthToken
+          in: header
+          name: Authorization
+        - schema:
+            type: string
+            default: Application/json
+          in: header
+          name: Content-type
+        - schema:
+            type: string
+            default: '2400'
+          in: header
+          name: x-device-UDID
+  '/api/parking-areas/{parking_area}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ParkingArea'
+        '':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParkingArea'
+      operationId: get-api-parking-areas
+      parameters:
+        - schema:
+            type: string
+            default: '2400'
+          in: header
+          name: x-device-UDID
+    parameters:
+      - schema:
+          type: string
+        name: parking_area
+        in: path
+        required: true
+  /api/parking-areas:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/ParkingArea'
+      operationId: get-api-parking-areas
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Accept
+        - schema:
+            type: string
+            default: Bearer sampleAuthToken
+          in: header
+          name: Authorization
+        - schema:
+            type: string
+            default: '2400'
+          in: header
+          name: x-device-UDID
+  /api/user/password:
+    put:
+      summary: ''
+      operationId: put-api-user-password
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+      parameters:
+        - schema:
+            type: string
+            default: Bearer fafasfsdfdfd
+          in: header
+          name: Authorization
+          required: true
+        - schema:
+            type: string
+            default: Application/json
+          in: header
+          name: Accept
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                password:
+                  type: string
+                password_confirmation:
+                  type: string
+components:
+  schemas:
+    City:
+      title: City
+      type: object
+      x-examples:
+        example-1: {}
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        state_name:
+          type: string
+        country_name:
+          type: string
+        region_name:
+          type: string
+        latitude:
+          type: string
+        longitude:
+          type: string
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        total:
+          type: integer
+        count:
+          type: integer
+        per_page:
+          type: integer
+        current_page:
+          type: integer
+        total_pages:
+          type: integer
+    Token:
+      title: Token
+      type: object
+      properties:
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+      x-examples:
+        example-1:
+          token_type: Bearer
+          expires_in: 31622400
+          access_token: ''
+          refresh_token: ''
+    User:
+      title: User
+      type: object
+      x-examples:
+        example-1:
+          id: 1
+          name: Raul
+          address: Exodus St.
+          city_id: 964
+          email: chrisbjr@gmail.com
+          mobile_number: 9171231234
+          avatar_thumb: 'http://synerpark.test/storage/1/conversions/id_pic-thumb.jpg'
+          avatar: 'http://synerpark.test/storage/1/conversions/id_pic-standard.jpg'
+          has_vehicle: false
+          is_mobile_number_verified: false
+          is_profile_completed: true
+          city:
+            data:
+              id: 964
+              name: Caloocan
+              state_name: Metro Manila
+              country_name: Philippines
+              region_name: National Capital Region
+              latitude: '14.75657840'
+              longitude: '121.04497680'
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        address:
+          type: string
+        city_id:
+          type: integer
+        email:
+          type: string
+        mobile_number:
+          type: string
+        avatar_thumb:
+          type: string
+        avatar:
+          type: string
+        has_vehicle:
+          type: boolean
+        is_mobile_number_verified:
+          type: boolean
+        is_profile_completed:
+          type: boolean
+        city:
+          type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/City'
+    Vehicle:
+      title: Vehicle
+      x-tags:
+        - vehicles
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        user_id:
+          type: integer
+          minimum: 1
+        plate_number:
+          type: string
+        make:
+          type: string
+        model:
+          type: string
+        color:
+          type: string
+        is_primary:
+          type: boolean
+        image:
+          type: string
+        image_thumb:
+          type: string
+        year:
+          type: string
+    Reservation:
+      title: Reservation
+      type: object
+      x-examples:
+        example-1: {}
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        parking_slot_id:
+          type: integer
+        vehicle_id:
+          type: integer
+        starts_at:
+          type: string
+        ends_at:
+          type: string
+        fee:
+          type: string
+        expires_at:
+          type: string
+        last_four_digits:
+          type: string
+        vehicle:
+          $ref: '#/components/schemas/Vehicle'
+        parking_area_level:
+          $ref: '#/components/schemas/ParkingAreaLevel'
+        parking_area:
+          $ref: '#/components/schemas/ParkingArea'
+        parking_slot:
+          $ref: '#/components/schemas/ParkingSlot'
+    ParkingAreaLevel:
+      title: Parking-Area-Level
+      type: object
+      x-examples:
+        example-1: {}
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        name:
+          type: string
+        available_slots:
+          type: integer
+          minimum: 1
+        fee:
+          type: number
+          default: 50
+          format: float
+          minimum: 1
+          maximum: 2
+    ParkingArea:
+      title: ParkingArea
+      type: object
+      x-examples:
+        example-1: {}
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        name:
+          type: string
+        description:
+          type: string
+        address_1:
+          type: string
+        address_2:
+          type: string
+        city_id:
+          type: integer
+          minimum: 1
+        latitude:
+          type: number
+          minimum: 1
+        longitude:
+          type: number
+          minimum: 1
+        parking_slot_total_count:
+          type: integer
+          minimum: 1
+        parking_slot_available_count:
+          type: integer
+          minimum: 1
+        image:
+          type: string
+        image_thumb:
+          type: string
+    ParkingSlot:
+      title: ParkingSlot
+      type: object
+      properties:
+        id:
+          type: integer
+        '':
+          type: string
+    Card:
+      title: Card
+      type: object
+      properties:
+        id:
+          type: string
+        card_type:
+          type:
+            - string
+            - 'null'
+        last_four_digits:
+          type:
+            - string
+            - 'null'
+        is_primary:
+          type: boolean
+        verificatoin_url:
+          type:
+            - string
+            - 'null'
+    ParkingAreaOperatingHours:
+      title: ParkingAreaOperatingHours
+      type: object
+      properties:
+        duration:
+          type: integer
+          minimum: 1
+        starts_at:
+          type: object
+          properties:
+            date:
+              type: string
+            timezone_type:
+              type: integer
+            timezone:
+              type: string
+        ends_at:
+          type: object
+          properties:
+            date:
+              type: string
+            timezone_type:
+              type: integer
+            timezone:
+              type: string
+  securitySchemes:
+    passport:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          tokenUrl: /oauth/token
+          refreshUrl: /token/refresh
+          scopes: []
+      description: ''

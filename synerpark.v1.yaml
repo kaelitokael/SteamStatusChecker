@@ -34,6 +34,7 @@ paths:
                     properties:
                       pagination:
                         $ref: '#/components/schemas/Pagination'
+          headers: {}
       operationId: get-cities
       parameters:
         - schema:
@@ -46,6 +47,11 @@ paths:
             type: string
           in: header
           name: x-device-udid
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: Authorization
           required: true
       requestBody: {}
     parameters: []
@@ -206,7 +212,7 @@ paths:
               properties:
                 data:
                   $ref: '#/components/schemas/User'
-  '/api/register/validate-email?email={email}}':
+  /api/register/validate-email:
     get:
       summary: Validate email
       tags:
@@ -250,13 +256,13 @@ paths:
           in: header
           name: X-Device-UDID
           required: true
+        - schema:
+            type: string
+          in: query
+          name: email
+          required: true
       requestBody: {}
-    parameters:
-      - schema:
-          type: string
-        name: email
-        in: path
-        required: true
+    parameters: []
   /api/vehicles:
     get:
       summary: Get Vehicles
@@ -287,9 +293,13 @@ paths:
           in: header
           name: Authorization
           required: true
-      security:
-        - passport: []
+        - schema:
+            type: string
+          in: header
+          name: x-device-udid
+          required: true
       requestBody: {}
+      description: ''
     post:
       summary: Create Vehicles
       tags:
@@ -654,16 +664,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ParkingArea'
-      operationId: get-api-parking-areas
+          description: OK
+      operationId: get-api-parking-area/id
       parameters:
         - schema:
             type: string
             default: '2400'
           in: header
           name: x-device-UDID
+      description: ''
     parameters:
       - schema:
-          type: string
+          type: integer
         name: parking_area
         in: path
         required: true
